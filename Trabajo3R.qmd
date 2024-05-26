@@ -1,0 +1,194 @@
+---
+title: "Trabajo 1"
+format: html
+editor: visual
+bibliography: Estratificacion social (brechas de pobreza).bib
+link-citations: true
+---
+
+
+## **Trabajo 1**
+
+##**La pobreza extrema y el desarrollo humano**
+
+Por Berta Bugueño
+
+Durante los últimos años se ha visto una disminución de la pobreza en Chile, especialmente en las zonas rurales del país, la multidimencionalidad que influye en este acontecer sociológico es, desde el punto de vista de la ética social cristiana donde "*se subraya la relevancia de realizar evaluaciones cualitativas sistemáticas sobre la pobreza y el desarrollo humano \[...\] La pobreza y el desarrollo humano son fenómenos sociales complejos*" [@daherEvaluacionCualitativaSistematica2019]
+
+Vamos a estudiar que nuevos trabajos y oportunidades de acceso a tecnologías, conectividades, educación, espacios públicos y vivienda han incidido para que la brecha de la pobreza en las zonas rurales haya variado y disminuido considerablemente desde 1990, según un estudio de Pérez, "*la distancia al mercado incide directamente sobre la pobreza de las personas, la movilidad influye directamente*". [@perezEfectoDistanciaMercado2013].
+
+La mayoría de las zonas rurales en Chile tiene muy mala conectividad, en las comunas rurales no existe el Metro, los otros medios de transportes son con frecuencias, en su mayoría muy distantes, sus máquinas antiguas, así mismo la educación es un factor preponderante para salir de la pobreza, en muchos casos en los sectores donde hay pobreza extrema, existe sólo educación municipalizada y no existe ninguna entidad de educación superior.
+
+Por otra parte el acceso a la vivienda también es un tema relevante y es uno de los factores que mide la pobreza, en algunos sectores la denominación de suelo impide que se realicen proyectos habitacionales.
+
+también es atendible el cómo perciben las personas la desigualdad, que según Paradox" *Las investigaciones sugieren que los ciudadanos de las sociedades desiguales están menos preocupados que las sociedades más igualitarias*"[@mijsParadoxInequalityIncome2021a]
+
+Un Factor muy importante es la salud mental, Vera-Bachmann establece que "*estudios constatan que la situación social de pobreza socioeconómica es un factor de riesgo psicosocial en general y de salud mental en particular, que afecta de manera especial a los sectores rurales*" tambien explica la relación de hogares de extrema pobreza con la cantidad de niños, existiendo una relación entre estas variables, así mismo en su artículo establece que niños y jóvenes abandonan los estudios e ingresan prematuramente al mundo del trabajo [@bachmannResiliencePovertyRurality2015]
+
+Se espera dilucidar que, a medida que aumentan las oportunidades de acceso a bienes y servicios, especialmente la educación, que mejoran la calidad de vida en las zonas rurales, disminuya la pobreza de sus habitantes. Desde el punto de vista teológico se puede observar que: "*considerando las múltiples dimensiones involucradas, así como el horizonte humanizador y del bien común. Se destaca la necesidad de realizar evaluaciones cualitativas sistemáticas a nivel nacional e internacional que complementen las mediciones cuantitativas, presentando sus aportes y consideraciones metodológicas y éticas. Finalmente, abordar las implicaciones y conexiones entre estas nociones, así como los desafíos conceptuales y metodológicos para la evaluación de la pobreza y el desarrollo humano en el marco de la Ética Social Cristiana*" [@daherEvaluacionCualitativaSistematica201]
+
+
+
+````{r}
+title: "Trabajo 2"
+format: html
+editor: visual
+bibliography: Estratificacion social (brechas de pobreza).bib
+link-citations: true
+
+```
+
+# TRABAJO 2
+
+
+
+## CARGAR PAQUETES
+
+```{r}
+{pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2}
+               car, #Para recodificar
+               haven,
+               summarytools, #Para descriptivos
+               sjmisc,
+               psych,
+               sjlabelled,
+               sjPlot,
+               corrplot,
+               kableExtra
+
+```
+
+# Cargar base de datos
+En este trabajo se toma la desición de cambiar la base de datos a EBS 2021 (Encuesta de Bienestar Social), porque la base de datos del trabajo N° 1 (Casen)  fue muy difícil de cargar, y no contaba con todos los datos necesarios para el planteamiento del trabajo o investigación a realizar.
+
+````{r}
+{Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta")}
+```
+
+## Selección de variables 
+
+Se trabajará con variables nivel educacional, satisfacción de ingresos, satisfacción de vivienda
+educación ingresos, zona, de la encuesta EBS (Encuesta de bienestar Social), que se ejecuta en conjunto por el Ministerio de Desarrollo Social y el Instituto Nacional de Estadísticas (INE) en Chile, contiene estas variables que se corresponden a lo que esta investigación se plantea dilucidar.                                                                               
+
+```{r}
+sjlabelled::get_label(proc_data)
+
+```
+
+## Cambiar nombres y etiquetas
+
+Se siguen los pasos para el cambio de etiquetas, las que quedarán finalmente como; nivel educacional
+satisfacción con los ingresos, satisfacción con la vivienda, efecto de la educación sobre los ingresos y zona
+
+```{r}
+proc_data = Base_de_datos_EBS_2021_STATA %>% select(e6a, a3_1, a3_3, a3_7, d1_1, zona)
+
+
+```
+
+En el caso de la variable nivel educacional (e6a) se toma la desición de realizar la investigación tomando esta variable de la base de datos del 2020 porque la del 2021 tiene muchos casos perdidos
+
+```{r}
+proc_data = proc_data %>% rename("nivel_educ"=e6a, "satisniveleducacional"=a3_1, "satis_ingreso"=a3_3, "satis_vivienda"=a3_7, "educ_ingresos"=d1_1, "zona"=zona)
+
+```
+
+```{r}
+proc_data$nivel_educ = set_label(x = proc_data$nivel_educ,label = "nivel educacional")
+proc_data$satisniveleducacional = set_label(x = proc_data$satisniveleducacional, label = "satisfacción con el  nivel educacional")
+proc_data$satis_ingreso = set_label(x = proc_data$satis_ingreso,label = "satisfacción con los ingresos")
+proc_data$satis_vivienda = set_label(x = proc_data$satis_vivienda,label = "satisfacción con la vivienda")
+proc_data$educ_ingresos = set_label(x = proc_data$educ_ingresos,label = "efecto de la educación sobre los ingresos")
+proc_data$zona = set_label(x = proc_data$zona,label = "zona")
+
+
+```
+
+# Tabla descriptiva general
+
+
+
+
+```{r}
+view(dfSummary(proc_data, headings=FALSE))
+```
+
+# Operalización de variable
+
+```{r}
+frq(proc_data$satisniveleducacional)
+
+frq(proc_data$satis_ingreso) 
+frq(proc_data$satis_vivienda)
+frq(proc_data$educ_ingresos) #tiene NA#
+
+proc_data =na.omit(proc_data)
+
+```
+
+
+La única variable que tiene casos perdidos (NA) es educación ingresos
+
+## Recodificación de variables
+
+### Variable binaria de zona
+
+```{r}
+frq(proc_data$zona)
+
+proc_data$zona <- car::recode(proc_data$zona, "1=0;2=1")
+
+proc_data$zona <- factor(proc_data$zona,
+                         
+                         labels=c( "Urbano",
+                                   
+                                   "Rural"),
+                         
+                         levels=c(0,1))
+
+```
+De una muestra poblacional de 10188 encuestados, 8.722 corresponden a urbanos y 1.466 a rural.
+```{r}
+
+frq(proc_data$zona)
+frq(proc_data$nivel_educ)
+```
+
+### Variable nivel educacional
+
+```{r}
+proc_data$nivel_educ <- car::recode(proc_data$nivel_educ, "c(1,2,3,4)=1; c(5)=2; c(6,7)=3; c(8,9,10,11)=4; 
+
+                             c(12,13,14,15,16,17)=5")
+
+proc_data$nivel_educ <- factor(proc_data$nivel_educ,
+                               
+                               labels = c("Analfabeto", "Educacion especial", "Educacion basica", 
+                                          
+                                          "Educacion media", "Educacion superior"),
+                               
+                               levels = c(1, 2, 3, 4, 5))
+```
+
+## Gráficar
+
+```{r}
+proc_data %>% ggplot(aes(x = nivel_educ)) + 
+  geom_bar()
+
+proc_data %>% ggplot(aes(x = satis_ingreso)) + 
+  geom_bar()
+
+proc_data %>% ggplot(aes(x = satis_vivienda)) + 
+  geom_bar()
+```
+
+## Tabla de contingencia de variables
+
+```{r}
+sjt.xtab(proc_data$nivel_educ, proc_data$satis_ingreso)
+
+```
+
+```{}
+```

@@ -1,0 +1,31 @@
+---
+title: "Untitled"Tarea N° 3
+format:
+editor: visual
+---
+
+## #TAREA N° 3
+
+**#Anexo# Trabajo 1**
+
+**La pobreza extrema y el desarrollo humano**
+
+Por Berta Bugueño
+
+Durante los últimos años se ha visto una disminución de la pobreza en Chile, especialmente en las zonas rurales del país, la multidimencionalidad que influye en este acontecer sociológico es, desde el punto de vista de la ética social cristiana donde *"se subraya la relevancia de realizar evaluaciones cualitativas sistemáticas sobre la pobreza y el desarrollo humano \[...\] La pobreza y el desarrollo humano son fenómenos sociales complejos"*[@daherEvaluacionCualitativaSistematica2019]
+
+Vamos a estudiar que nuevos trabajos y oportunidades de acceso a tecnologías, conectividades, educación, espacios públicos y vivienda han incidido para que la brecha de la pobreza en las zonas rurales haya variado y disminuido considerablemente desde 1990, según un estudio de Pérez, la distancia al mercado incide directamente sobre la pobreza de las personas, la movilidad influye directamente. [@perezEfectoDistanciaMercado2013].
+
+La mayoría de las zonas rurales en Chile tiene muy mala conectividad, en las comunas rurales no existe el Metro, los otros medios de transportes son con frecuencias, en su mayoría muy distantes, sus máquinas antiguas, así mismo la educación es un factor preponderante para salir de la pobreza, en muchos casos en los sectores donde hay pobreza extrema, existe sólo educación municipalizada y no existe ninguna entidad de educación superior.
+
+Por otra parte el acceso a la vivienda también es un tema relevante y es uno de los factores que mide la pobreza, en algunos sectores la denominación de suelo impide que se realicen proyectos habitacionales.
+
+Tambien es atendible el como perciben las personas la desigualdad, que según Paradox *"Las investigaciones sugieren que los ciudadanos de las sociedades desiguales están menos preocupados que las sociedades más igualitarias"*[@mijsParadoxInequalityIncome2021a]
+
+Un Factor muy importante es la salud mental, Vera-Bachmann establece que *"estudios constatan que la situación social de pobreza socioeconómica es un factor de riesgo psicosocial en general y de salud mental en particular, que afecta de manera especial a los sectores rurales"* tambien explica la relación de hogares de extrema pobreza con la cantidad de niños, existiendo una relación entre estas variables, así mismo en su artículo establece que niños y jóvenes abandonan los estudios e ingresan prematuramente al mundo del rabajo [@bachmannResiliencePovertyRurality2015]
+
+Se espera dilucidar que, a medida que aumentan las oportunidades de acceso a bienes y servicios, especialmente la educacion, que mejoran la calidad de vida en las zonas rurales, disminuya la pobreza de sus habitantes. Des de el punto de vista teológico se puede observar que:
+
+"*considerando las múltiples dimensiones involucradas, así como el horizonte humanizador y del bien común. Se destaca la necesidad de realizar evaluaciones cualitativas sistemáticas a nivel nacional e internacional que complementen las mediciones cuantitativas, presentando sus aportes y consideraciones metodológicas y éticas. Finalmente, abordar las implicaciones y conexiones entre estas nociones, así como los desafíos conceptuales y metodológicos para la evaluación de la pobreza y el desarrollo humano en el marco de la Ética Social Cristiana*"
+
+[@daherEvaluacionCualitativaSistematica201]
