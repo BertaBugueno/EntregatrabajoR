@@ -174,18 +174,42 @@ Gráfico N° 1  de barras muestra el Nivel Educacional. Se puede apreciar que l
 
 Gráfico N° 3 Satisfacción con la vivienda, la moda es la N° 4 "satisfecho" , por lo que se puede decir que la mayoría de las personas encuestadas se siente satisfecha o totalmente satisfecha con su vivienda.
 
-Con esta visión general de los datos podemos analizar la asociación entre las variables (trabajo 3 enviado)
+Con esta visión general de los datos podemos analizar la asociación entre las variables
 
-#  HAY QUE AGREGAR ANÁLISIS Y GRÁFICO DEL TRABAJO 3#####
+## 
 
-## corrplot.mixed(cor(select(proc_data,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
+`{title: "Trabajo 3"} format: html editor: visual bibliography: Estratificacion social (brechas de pobreza).bib link-citations: true`
 
-use = "complete.obs"))
+# Trabajo 3
 
-# TRABAJO 4
-
-## Tabla descriptiva
+## Cargar Paquetes
 
 ```{r}
-view_df(proc_data,max.len = 50)
+pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
+               car, #Para recodificar
+               haven,
+               summarytools, #Para descriptivos
+               sjmisc,
+               psych,
+               sjlabelled,
+               sjPlot,
+               corrplot
+
+
 ```
+
+Pese a que los paquetes ya están cargados en este mismo archivo, se toma la desición de cargarlos igual en esta tarea, para cumplir los pasos que la tarea requiere.
+
+## Cargar base de datos
+
+```{r}
+Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta")
+```
+
+Se toma como base la encuesta de Bienestar Social (EBS) del Ministerio de Desarrollo Social, se considera una base de datos que contiene las variables idóneas para este estudio, además de ser de muy fácil acceso.
+
+## Selección de variables
+
+Se trabajará con variables nivel educacional, satisfacción con el nivel educacional, satisfacción de ingresos, efecto de la educación sobre los ingresos, satisfacción de vivienda, y zona.
+
+# TRABAJO 4
