@@ -65,6 +65,8 @@ proc_data =na.omit(proc_data)#omitir casos perdidos de toda la base (educ, ingre
 
 ##Recodificación de variables
 
+proc_data2 = proc_data
+
 #Variable binaria de zona
 
 frq(proc_data$zona)
@@ -73,12 +75,12 @@ proc_data$zona <- car::recode(proc_data$zona, "1=0;2=1")
 proc_data$zona <- as.numeric(proc_data$zona,
                          labels=c( "Urbano",
                                    "Rural"),
-                         levels=c(0,1)
+                         levels=c(0,1))
 
 
 proc_data$zona <- set_labels(proc_data$zona,
-                                     labels=c( "Urbano"=0,
-                                               "Rural"=1))
+                         labels=c( "Urbano"=1,
+                                   "Rural"=0))
 frq(proc_data$zona)
 frq(proc_data$nivel_educ)
 
@@ -105,10 +107,10 @@ proc_data %>% ggplot(aes(x = satis_vivienda)) +
 
 
 
-#TAREA 3
-corrplot.mixed(cor(select(proc_data,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
+#TAREA 3 FUE ENVIADA EN SCRIP APARTE Pero se incluye esta parte  para el análisis del gráfico (asociación)
+
+corrplot.mixed(cor(select(proc_data2,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
                    use = "complete.obs"))
-####INTERPRETAR GRAFICO DE PELOTITAS EN QUARTO#### n(se llama interpretación de la asociación)
 
 #Cargar paquetes
 pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
@@ -119,7 +121,7 @@ pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
                psych,
                sjlabelled,
                sjPlot,
-               corrplot
+               corrplot)
                
 #Cargar base de datos
 Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta")
@@ -128,6 +130,8 @@ Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta
 
 #Se trabajará con variables nivel educacional, satisfacción con el nivel educacional,  satisfacción de ingresos, efecto de la educación sobre los ingresos, satisfacción de vivienda, y zona
 #educación ingresos, en la encuesta EBS, contiene estas variables que se corresponden o contienen lo que esta investigación se plantea dilucidar. En esta etapa se desarrollará nivel educacional
+
+
 
 
 ##TAREA 4##
@@ -141,22 +145,40 @@ pacman::p_load(dplyr,
                sjlabelled, 
                fastDummies, 
                ggeffects)
+
 #Tabla descriptiva
 proc_data$zona <- set_labels(proc_data$zona,
                              labels=c( "Urbano"=0,
                                        "Rural"=1))
 view_df(proc_data,max.len = 50)
 
-######plot_stackfrq(proc_data[,c("part01","part02","part03","part04")]) + theme(legend.position="bottom")
+#plot_stackfrq(proc_data[,c("part01","part02","part03","part04")]) + theme(legend.position="bottom")
 
-corrplot.mixed(cor(select(proc_data,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
-                   use = "complete.obs"))
 
-###REGRESIÓN LINEAL###
+
+  ##REGRESIÓN LINEAL## 
+
+
 fit01<- lm(nivel_educ~zona,data=proc_data)
 fit02<- lm(satis_ingreso~zona,data=proc_data)
 fit03<- lm(educ_ingresos~zona,data=proc_data)
                               
 # htmlreg para que se vea en el sitio web
 knitreg(list(fit01,fit02,fit03),
-        custom.model.names = c("Modelo 1","Modelo 2","Modelo 3")
+        custom.model.names = c("Modelo 1","Modelo 2","Modelo 3"))
+
+##GRAFICAR##
+
+ggeffects::ggpredict(fit01, terms = c("zona")) %>%
+  ggplot(aes(x=x, y=predicted)) +
+  geom_bar(stat="identity", color="grey", fill="grey")+
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
+  labs(title="zona", x = "", y = "") +
+  theme_bw() +
+  scale_x_discrete(name = "zona",
+                     breaks = c(0,1),
+                     labels = c("Urbano", "Rural"))+
+  scale_y_continuous(limits = c(0,16), 
+                     breaks = seq(0,16, by = 1))
+
+

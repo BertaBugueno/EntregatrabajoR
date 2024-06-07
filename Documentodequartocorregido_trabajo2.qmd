@@ -71,7 +71,6 @@ Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta
 #educación ingresos,zona, la encuesta EBS, contiene estas variables que se corresponden 
 #lo que esta investigación se plantea dilucidar#
 
-sjlabelled::get_label(proc_data)
 
 #Cambiar nombres y etiquetas
 # Se siguen los pasos para el cambio de etiquetas, las que quedarán finalmente como; nivel educacional
@@ -80,7 +79,7 @@ proc_data = Base_de_datos_EBS_2021_STATA %>% select(e6a, a3_1, a3_3, a3_7, d1_1,
 
 ```
 
-# Operalización de variables
+# Operacionalización de variables
 
 ```{r}
 #| warning: false
@@ -121,13 +120,22 @@ Efecto de educación sobre los ingresos, con una muestra poblacional de 10.188 e
 
 proc_data$zona <- car::recode(proc_data$zona, "1=0;2=1")
 
-proc_data$zona <- factor(proc_data$zona,
-                         
+proc_data$nivel_educ <- car::recode(proc_data$nivel_educ, "c(1,2,3,4)=1; c(5)=2; c(6,7)=3; c(8,9,10,11)=4; 
+
+                             c(12,13,14,15,16,17)=5")
+proc_data2 = proc_data
+
+proc_data$zona <- as.numeric(proc_data$zona,
                          labels=c( "Urbano",
-                                   
                                    "Rural"),
-                         
                          levels=c(0,1))
+
+
+proc_data$zona <- set_labels(proc_data$zona,
+                         labels=c( "Urbano"=0,
+                                   "Rural"=1))
+
+
 frq(proc_data$zona)
 
 ```
@@ -141,6 +149,12 @@ De una muestra poblacional de 10188 encuestados, 8.722 corresponden a urbanos y 
 Se recodifica la variable de nivel educacional para trabajar con menos categorías y facilitar el análisis. La recodificación queda de la siguiente manera: Se denomina como analfabeto a quienes están en el N°1= nunca asistió, N° 2 sala cuna, N° 3 jardín infantil (medio menor y medio mayor), N° 4 Prekinder/ Kínder. El segundo grupo  es Enseñanza básica= N°6, primaria o preparatoria (sistema antiguo), N°7 educación básica. Enseñanza media = N°8, Humanidades (sistema antiguo), N°9 Educación media científico humanista, N°10 Técnica comercial, Industrial o Normalista (sistema antiguo) N° 11 Educación media Técnico profesional. Enseñanza superior= N° 12 Técnico Nivel Superior Incompleto (carrera de 1 a 3 años) N° 13 Técnico Nivel Superior Completo (carreras de 1 a 3 años) N°14, Profesional incompleto (Carreras de 4 o más años) N° 15, Profesional Completo (Carreras de 4 o más años) N° 16 Postgrado incompleto, N°17 Post grado completo. Además la educación especial queda en una categoría diferenciada porque no se especifica a que se refiere esta categoría, por lo que no se agrupa con los demás niveles. 
 
 ## Graficos
+
+proc_data\$nivel_educ \<- car::recode(proc_data\$nivel_educ, "c(1,2,3,4)=1; c(5)=2; c(6,7)=3; c(8,9,10,11)=4;
+
+c(12,13,14,15,16,17)=5")
+
+proc_data2 = proc_data
 
 ```{r}
 #| warning: false
@@ -168,24 +182,133 @@ proc_data %>% ggplot(aes(x = satis_vivienda)) +
   geom_bar()
 ```
 
-Gráfico N° 1  de barras muestra el Nivel Educacional. Se puede apreciar que la moda es educación media, además las categorías con menos casos son las de analfabeto y educación especial. 
+Gráfico N° 1, eleboración propia, este gráfico de barras muestra el Nivel Educacional. Se puede apreciar que la moda es educación media, además las categorías con menos casos son las de analfabeto y educación especial. 
 
-  Gráfico N° 2 de barras satis-ingreso, a simple vista parece bimodal, se puede apreciar que la moda (4 satisfecho) es muy parecida a (2 insatisfecho), sin embargo, el promedio es 2.93,lo que indica que hay una baja satisfacción con los ingresos.
+ Gráfico N° 2 , elaboración propia, este gráfico de barras satis-ingreso, a simple vista parece bimodal, se puede apreciar que la moda (4 satisfecho) es muy parecida a (2 insatisfecho), sin embargo, el promedio es 2.93,lo que indica que hay una baja satisfacción con los ingresos.
 
-Gráfico N° 3 Satisfacción con la vivienda, la moda es la N° 4 "satisfecho" , por lo que se puede decir que la mayoría de las personas encuestadas se siente satisfecha o totalmente satisfecha con su vivienda.
+Gráfico N° 3, elaboración propia, este gráfico de barras, satisfacción con la vivienda, la moda es la N° 4 "satisfecho" , por lo que se puede decir que la mayoría de las personas encuestadas se siente satisfecha o totalmente satisfecha con su vivienda.
 
 Con esta visión general de los datos podemos analizar la asociación entre las variables (trabajo 3 enviado)
 
-#  HAY QUE AGREGAR ANÁLISIS Y GRÁFICO DEL TRABAJO 3#####
+## SE AGREGAR GRÁFICO Y EL ANÁLISIS DEL TRABAJO 3
 
-## corrplot.mixed(cor(select(proc_data,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
+#### Este trabajo fue enviado aparte, anteriormente, pero se incluye el gráfico de matriz con el correcto análisis
 
-use = "complete.obs"))
+```{r}
+#| warning: false
+#| echo: false
+
+proc_data$nivel_educ <- car::recode(proc_data$nivel_educ, "c(1,2,3,4)=1; c(5)=2; c(6,7)=3; c(8,9,10,11)=4; c(12,13,14,15,16,17)=5")
+
+proc_data$nivel_educ <- set_labels(proc_data$nivel_educ,
+                             labels=c( "Analfabeto"=1,
+                                       "Educación especial"=2,
+                                       "Educación básica"=3,
+                                       "Educación media"=4,
+                                       "Educación superior"=5))
+
+####INTERPRETAR GRAFICO DE PELOTITAS EN QUARTO#### n(se llama interpretación de la asociación)
+
+#Cargar paquetes
+pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
+               car, #Para recodificar
+               haven,
+               summarytools, #Para descriptivos
+               sjmisc,
+               psych,
+               sjlabelled,
+               sjPlot,
+               corrplot)
+
+
+corrplot.mixed(cor(select(proc_data2,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
+                   use = "complete.obs"))               
+
+```
+
+Gráfico N° 4, eleboración propia. Este gráfico/matriz representa el grado de asociación entre variables mediante el tamaño de los círculos e intensidad de colores, y el signo de la asociación se representa con una gradiente de colores que va del azul (positivo) al rojo (negativo). Por lo tanto, se puede ver que la mayor asociación es entre nivel educacional e ingresos con 0.37 que corresponde a una relación moderada. También se observa que las correlaciones de las variables son positivas, excepto la asociación de las variables zona-nivel educacional, que da un valor negativo -0.18, lo que indica que es una asociación con fuerte correlación negativa y que corresponde el valor más bajo de este gráfico
 
 # TRABAJO 4
 
 ## Tabla descriptiva
 
+Regresión
+
 ```{r}
+#| warning: false
+#| echo: false
 view_df(proc_data,max.len = 50)
 ```
+
+## Regresión lineal
+
+```{r}
+#| warning: false
+#| echo: false
+fit01<- lm(nivel_educ~zona,data=proc_data)
+fit02<- lm(satis_ingreso~zona,data=proc_data)
+fit03<- lm(educ_ingresos~zona,data=proc_data)
+
+# htmlreg para que se vea en el sitio web
+knitreg(list(fit01,fit02,fit03),
+        custom.model.names = c("Modelo 1","Modelo 2","Modelo 3"))
+```
+
+En el modelo 1 se incluye zona como predictor, que tiene como coeficiente de regresión -0,40. Esto indica que, disminuye la población de la zona rural en 0.40 unidades. Efecto que lo podemos extrapolar a la población con un 99,9 % de confianza (p\< 0,001) El intercepto de 4.20, lo que indica que (teóricamente) las personas de zona urbana tienen una educación de 4.20. El R2 indica el modelo 1 logra explicar el 3% de la varianza de la variable dependiente (R2=0,03)
+
+En el modelo 2 se incluye zona como predictor, que tiene como coeficiente de regresión 0.06 Esto indica que, la satisfacción con el ingreso en zona rural es de 0.06 mayor que la satisfacción de las personas en zona urbana. no es estadísticamente significativo (p\<0,01) El intercepto de 2.93, lo que indica que (teóricamente) las personas de zona urbana tienen una satisfacción con el ingreso de 2.93. El R2 indica el modelo 2 logra explicar el 0% de la varianza de la variable dependiente (R2=0,00)
+
+En el modelo 3 se incluye zona como predictor, que tiene como coeficiente de regresión -0.18 Esto indica que, el efecto de la educación sobre el ingreso disminuye en la población de la zona rural en -0.18 unidades. Efecto que lo podemos extrapolar a la población con un 99, 9% de confianza (p\< 0.001) El intercepto de 2.83, lo que indica que (teóricamente) las personas de zona urbana tienen efecto de la educación sobre el ingreso de 2.83. El R2 indica el modelo 3 logra explicar el 0% de la varianza de la variable dependiente (R2=0,00)
+
+## Graficar
+
+```{r}
+#| warning: false
+#| echo: false
+ggeffects::ggpredict(fit01, terms = c("zona")) %>%
+  ggplot(aes(x=x, y=predicted)) +
+  geom_bar(stat="identity", color="grey", fill="grey")+
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
+  labs(title="zona", x = "", y = "") +
+  theme_bw() +
+  scale_x_discrete(name = "zona",
+                     breaks = c(0,1),
+                     labels = c("Urbano", "Rural"))+
+  scale_y_continuous(limits = c(0,16), 
+                     breaks = seq(0,16, by = 1))
+
+
+```
+
+Grafico N° 5, elaboración propia, Para analizar este gráfico se hará mención también al modelo de regresión estimado, el gráfico muestra que hay una distribución desigual de la población entre las diferentes zonas. La zona urbana tiene un nivel educacional de la población significativamente mayor que la zona rural, según la muestra poblacional.
+
+## Notas explicativas
+
+```{r}
+{r}
+#| warning: false
+#| echo: false
+
+proc_data$zona <- car::recode(proc_data$zona, "1=0;2=1")
+
+proc_data$nivel_educ <- car::recode(proc_data$nivel_educ, "c(1,2,3,4)=1; c(5)=2; c(6,7)=3; c(8,9,10,11)=4; 
+
+                             c(12,13,14,15,16,17)=5")
+proc_data2 = proc_data
+
+proc_data$zona <- as.numeric(proc_data$zona,
+                         labels=c( "Urbano",
+                                   "Rural"),
+                         levels=c(0,1))
+
+
+proc_data$zona <- set_labels(proc_data$zona,
+                         labels=c( "Urbano"=0,
+                                   "Rural"=1))
+
+
+frq(proc_data$zona)
+
+```
+
+Se recodificó la variable categórica "zona" (urbano 0 y rural 1) Esto para poder hacer la regresión lineal, facilitar la comprensión de los resultados y presentarlo en un formato compatible.
