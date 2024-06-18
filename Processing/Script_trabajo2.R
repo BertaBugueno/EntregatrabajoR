@@ -168,6 +168,17 @@ knitreg(list(fit01,fit02,fit03),
         custom.model.names = c("Modelo 1","Modelo 2","Modelo 3"))
 
 ##GRAFICAR##
+ggeffects::ggpredict(fit01, terms = c("zona")) %>%
+ggplot(aes(x=x, y=predicted)) +
+  geom_bar(stat="identity", color="grey", fill="grey")+
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
+  labs(title="zona", x = "", y = "") +
+  theme_bw() +
+  scale_x_discrete(name = "zona",
+                     breaks = c(0,1),
+                     labels = c("Urbano", "Rural"))+
+  scale_y_continuous(limits = c(0,16), 
+                     breaks = seq(0,16, by = 1))
 
 ggeffects::ggpredict(fit01, terms = c("zona")) %>%
   ggplot(aes(x=x, y=predicted)) +
@@ -176,8 +187,8 @@ ggeffects::ggpredict(fit01, terms = c("zona")) %>%
   labs(title="zona", x = "", y = "") +
   theme_bw() +
   scale_x_discrete(name = "zona",
-                     breaks = c(0,1),
-                     labels = c("Urbano", "Rural"))+
+                   breaks = c(0,1),
+                   labels = c("Urbano", "Rural"))+
   scale_y_continuous(limits = c(0,16), 
                      breaks = seq(0,16, by = 1))
 

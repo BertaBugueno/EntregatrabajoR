@@ -2,8 +2,8 @@
 title: "Trabajo 1"
 format: html
 editor: visual
-bibliography: Estratificacion social (brechas de pobreza).bib
-link-citations: true
+#bibliography: Estratificacion social (brechas de pobreza).bib
+#link-citations: true
 ---
 
 ## **Trabajo 1**
@@ -63,6 +63,8 @@ pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
                sjPlot,
                corrplot,
                kableExtra)
+
+
 Base_de_datos_EBS_2021_STATA <- read_dta("Imput/Base de datos EBS 2021 STATA.dta")
 
 
@@ -220,6 +222,16 @@ pacman::p_load(tidyverse, #Conjunto de paquetes, sobre todo dplyr y ggplot2
                sjPlot,
                corrplot)
 
+pacman::p_load(dplyr, 
+               car, 
+               summarytools, 
+               sjPlot, 
+               texreg, 
+               corrplot, 
+               ggplot2, 
+               sjlabelled, 
+               fastDummies, 
+               ggeffects)
 
 corrplot.mixed(cor(select(proc_data2,nivel_educ,satis_vivienda,satis_ingreso,satisniveleducacional,educ_ingresos,zona),
                    use = "complete.obs"))               
@@ -268,14 +280,14 @@ En el modelo 3 se incluye zona como predictor, que tiene como coeficiente de reg
 ggeffects::ggpredict(fit01, terms = c("zona")) %>%
   ggplot(aes(x=x, y=predicted)) +
   geom_bar(stat="identity", color="grey", fill="grey")+
-  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
+ # geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
   labs(title="zona", x = "", y = "") +
   theme_bw() +
   scale_x_discrete(name = "zona",
                      breaks = c(0,1),
                      labels = c("Urbano", "Rural"))+
-  scale_y_continuous(limits = c(0,16), 
-                     breaks = seq(0,16, by = 1))
+  scale_y_continuous(limits = c(0,5), 
+                     breaks = seq(0,5, by = 1))
 
 
 ```
@@ -285,7 +297,6 @@ Grafico N° 5, elaboración propia, Para analizar este gráfico se hará menció
 ## Notas explicativas
 
 ```{r}
-{r}
 #| warning: false
 #| echo: false
 

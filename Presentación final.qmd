@@ -1,0 +1,67 @@
+---
+title: "Presentación R"
+autor: Berta
+format:
+  revealjs: 
+    theme: sky
+editor: visual
+---
+
+## Introducción
+La pobreza extrema, su diferencia por zonas y la injerencia de la educación
+
+En este trabajo, la hipótesis es que en las zonas rurales existe mayor nivel de pobreza que en las zonas urbanas, y que el nivel educacional es una causalidad fundamental,  se toma como base de datos la encuesta EBS del 2021, se trabajó con 6 variables:
+
+1.- Nivel educacional
+2.- Satisfacción con el nivel educacional
+3.- Satisfacción con el ingreso
+4.- Satisfacción con la vivienda
+5.- Efecto de la educación sobre los ingresos
+6.- Zona
+
+## La pobreza extrema y el desarrollo humano\*\* {.smaller}
+
+
+::: columns
+::: {.column width="45%"}
+Este gráfico/matriz representa el grado de asociación entre variables mediante el tamaño de los círculos y colores . Se puede ver que la mayor asociación es entre nivel educacional e ingresos con 0.37 que corresponde a una relación moderada. También se observa que las correlaciones de las variables son positivas, excepto la asociación de las variables zona-nivel educacional, que da un valor negativo -0.18, lo que indica que es una asociación con fuerte correlación negativa.
+
+:::
+
+::: {.column width="55%"}
+![](Trabajo4_files/figure-html/unnamed-chunk-5-1.png)
+:::
+:::
+
+## resultados {.smaller}
+
+
+
+::: columns
+::: {.column width="50%"}
+![](Trabajo4_files/figure-html/unnamed-chunk-8-1.png)
+:::
+
+::: {.column width="50%"}
+
+El gráfico muestra que hay una distribución desigual de la población entre las diferentes zonas. La zona urbana tiene un nivel educacional de la población significativamente mayor que la zona rural, según la muestra poblacional.
+
+:::
+:::
+
+
+
+
+# Conclusión
+
+
+-   En esta investigación quisimos demostrar que la pobreza extrema y el desarrollo humanao, tiene diferencias entre las zonas rurales respecto a las urbanas.
+-   Nuestros principales resultados indican que efectivamente hay diferencias, especialmente en el nivel educacional.
+- Para aumentar la comprensión hay que identificar patrones y relaciones causales, debido a la  complejidad de los fenómenos sociales siempre astingentes.
+
+
+
+## GRACIAS!!
+
+
+

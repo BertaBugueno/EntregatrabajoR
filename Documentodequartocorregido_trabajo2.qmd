@@ -266,7 +266,7 @@ En el modelo 3 se incluye zona como predictor, que tiene como coeficiente de reg
 #| warning: false
 #| echo: false
 ggeffects::ggpredict(fit01, terms = c("zona")) %>%
-  ggplot(aes(x=x, y=predicted)) +
+ggplot(aes(x=x, y=predicted)) +
   geom_bar(stat="identity", color="grey", fill="grey")+
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width=.1) +
   labs(title="zona", x = "", y = "") +
